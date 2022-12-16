@@ -134,22 +134,24 @@ let cage3: ICages = {
     animals: [],
 }
 
-function placeAnimals(animal:IAnimal,enclosure:ICages) {
-    if (animal.reservoir===enclosure.reservoir && animal.biome===enclosure.biome && animal.requiredSpace<=enclosure.area) {
+function placeAnimals(animal:IAnimal,area:ICages) {
+    if (animal.reservoir===area.reservoir && animal.biome===area.biome && animal.requiredSpace<=area.area) {
                  
-    console.log(`This enclosure is suitable for ${animal.name}.`); 
-    checkType(animal,enclosure.animals);
+        
+
+    console.log(`This area is suitable for ${animal.name}.`); 
+    checkType(animal,area.animals);
 
 
    
-    // return console.log(`${animal.name} added to ${enclosure.name}`) ;
+    // return console.log(`${animal.name} added to ${area.name}`) ;
 
-    return `${animal.name} added to ${enclosure.name}`;
+    return `${animal.name} added to ${area.name}`;
 
         
     }
     else{
-        console.log(`It is impossible to add "${animal.name}" to enclosure with ${enclosure.area}m area,${enclosure.biome} biome. `);
+        console.log(`It is impossible to add "${animal.name}" to area with ${area.area}m area,${area.biome} biome. `);
         // return console.log('That is why adding failed.')
 
         return 'In this case it is not possible';
@@ -159,7 +161,7 @@ function placeAnimals(animal:IAnimal,enclosure:ICages) {
 function checkType(animal:IAnimal,animals:IAnimal[]) {
 for (let i = 0; i < animals.length; i++) {
 if ((animals[i].typeofAnimal=='predator' && animal.typeofAnimal=='herbivore') || (animals[i].typeofAnimal=='herbivore' && animal.typeofAnimal=='predator')) {
-    console.log(`This enclosure is not suitable for ${animal.name},because types of animals are opposite. `);
+    console.log(`This area is not suitable for ${animal.name},because types of animals are opposite. `);
     console.log('====================================');
 }
 else{
@@ -188,12 +190,15 @@ console.log('*******************************************************************
 
 
 
-function showAnimals(enclosure:ICages) {
-console.log(`Animals in ${enclosure.name}:`);
-enclosure.animals.forEach(anm => {
+function showAnimals(area:ICages) {
+console.log(`Animals in ${area.name}:`);
+
+area.animals.forEach(anm => {
+
 console.log(anm.name)
-if (enclosure.animals.length===0) {
-    console.log("This enclosure is empty..");
+
+if (area.animals.length===0) {
+    console.log("This area is empty..");
     
 }
 return console.log(`${anm.name}`) 
