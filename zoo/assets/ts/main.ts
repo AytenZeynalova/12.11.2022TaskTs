@@ -8,11 +8,14 @@ interface IAnimalTypes {
     typeofAnimal:Type;
 }
 
-interface IAnimal extends IAnimalTypes {
+interface IAnimal {
     id: number;
     name: string;
     age: number;
     food: number;
+    typeAnm: IAnimalTypes
+
+    
 }
 
 interface ICages {
@@ -34,12 +37,16 @@ let redfox1:IAnimal = {
     name: 'redfox1',
     age: 3,
     food: 310,
-    animal: "redfox",
-    biome: "Taiga",
-    reservoir: true,
-    requiredSpace: 50,
-    eatfood: "mammals",
-    typeofAnimal:"predator",
+    typeAnm:{
+        id:1,
+        animal: "redfox",
+        biome: "Taiga",
+        reservoir: true,
+        requiredSpace: 50,
+        eatfood: "mammals",
+        typeofAnimal:"predator",
+    }
+    
 }
 
 let redfox2: IAnimal = {
@@ -47,12 +54,17 @@ let redfox2: IAnimal = {
     name: 'redfox2',
     age: 4,
     food: 500,
-    animal: "redfox",
-    biome: "Taiga",
-    reservoir: true,
-    requiredSpace: 50,
-    eatfood: "mammals",
-    typeofAnimal:"predator",
+    typeAnm:{
+        id:2,
+        animal: "redfox",
+        biome: "Taiga",
+        reservoir: true,
+        requiredSpace: 50,
+        eatfood: "mammals",
+        typeofAnimal:"predator",
+
+    }
+    
 }
 
 let redfox3: IAnimal = {
@@ -60,12 +72,17 @@ let redfox3: IAnimal = {
     name: 'redfox3',
     age: 3,
     food: 600,
-    animal: "redfox",
-    biome: "Taiga",
-    reservoir: true,
-    requiredSpace: 50,
-    eatfood: "mammals",
-    typeofAnimal:"predator",
+    typeAnm:{
+        id:3,
+        animal: "redfox",
+        biome: "Taiga",
+        reservoir: true,
+        requiredSpace: 50,
+        eatfood: "mammals",
+        typeofAnimal:"predator",
+
+    }
+    
 }
 
 let rabbit1: IAnimal = {
@@ -73,12 +90,17 @@ let rabbit1: IAnimal = {
     name: 'rabbit1',
     age: 0,
     food: 20,
-    animal: "rabbit",
-    biome: "forest",
-    reservoir: true,
-    requiredSpace: 10,
-    eatfood: "grass",
-    typeofAnimal:"herbivore",
+
+    typeAnm:{
+        id:4,
+        animal: "rabbit",
+        biome: "forest",
+        reservoir: true,
+        requiredSpace: 10,
+        eatfood: "grass",
+        typeofAnimal:"herbivore",
+    }
+    
 }
 
 let rabbit2: IAnimal = {
@@ -86,12 +108,16 @@ let rabbit2: IAnimal = {
     name: 'rabbit2',
     age: 0,
     food: 20,
-    animal: "rabbit",
-    biome: "forest",
-    reservoir: true,
-    requiredSpace: 10,
-    eatfood: "grass",
-    typeofAnimal:"herbivore",
+    typeAnm:{
+        id:5,
+        animal: "rabbit",
+        biome: "forest",
+        reservoir: true,
+        requiredSpace: 10,
+        eatfood: "grass",
+        typeofAnimal:"herbivore",
+    }
+   
 }
 
 let tiger1: IAnimal = {
@@ -99,12 +125,16 @@ let tiger1: IAnimal = {
     name: 'tiger1',
     age: 2,
     food: 200,
-    animal: "tiger",
-    biome: "tropical",
-    reservoir: false,
-    requiredSpace: 1000,
-    eatfood: "carnivore",
-    typeofAnimal:"predator",
+    typeAnm:{
+        id:6,
+        animal: "tiger",
+        biome: "tropical",
+        reservoir: false,
+        requiredSpace: 1000,
+        eatfood: "carnivore",
+        typeofAnimal:"predator",
+    }
+    
 }
 
 let cage1: ICages = {
@@ -135,7 +165,7 @@ let cage3: ICages = {
 }
 
 function placeAnimals(animal:IAnimal,area:ICages) {
-    if (animal.reservoir===area.reservoir && animal.biome===area.biome && animal.requiredSpace<=area.area) {
+    if (animal.typeAnm.reservoir===area.reservoir && animal.typeAnm.biome===area.biome && animal.typeAnm.requiredSpace<=area.area) {
                  
         
 
@@ -158,18 +188,20 @@ function placeAnimals(animal:IAnimal,area:ICages) {
     }
 
 }
-function checkType(animal:IAnimal,animals:IAnimal[]) {
+function checkType(animal:IAnimal,animals:IAnimal[]): boolean {
 for (let i = 0; i < animals.length; i++) {
-if ((animals[i].typeofAnimal=='predator' && animal.typeofAnimal=='herbivore') || (animals[i].typeofAnimal=='herbivore' && animal.typeofAnimal=='predator')) {
+if ((animals[i].typeAnm.typeofAnimal!=animal.typeAnm.typeofAnimal)) {
     console.log(`This area is not suitable for ${animal.name},because types of animals are opposite. `);
-    console.log('====================================');
-}
-else{
-    animals.push(animal);
-    
+    console.log('***********************************************************************************************');
+    return false;
 }
 
+   
+
 }
+
+animals.push(animal);
+return true;
 
 
 //    animal or animals list
@@ -184,29 +216,23 @@ console.log(placeAnimals(rabbit1,cage1));
 console.log(placeAnimals(rabbit2,cage2));
 console.log(placeAnimals(tiger1,cage2));
 
-console.log('************************************************************************************************');
-console.log('================================================================================================');
-console.log('************************************************************************************************');
+console.log("#############################################################################");
 
 
-
-function showAnimals(area:ICages) {
-console.log(`Animals in ${area.name}:`);
-
-area.animals.forEach(anm => {
-
-console.log(anm.name)
-
-if (area.animals.length===0) {
-    console.log("This area is empty..");
+function showAnimals(enclosure:ICages) {
+    console.log(`Animals in ${enclosure.name}:`);
+    enclosure.animals.forEach(anm => {
+    console.log(anm.name)
+    if (enclosure.animals.length===0) {
+        console.log("This enclosure is empty..");
+        
+    }
+    return anm.name
+    })
+    }
+    showAnimals(cage1);
+    showAnimals(cage2);
+    showAnimals(cage3);
     
-}
-return console.log(`${anm.name}`) 
-})
-}
-showAnimals(cage1);
-showAnimals(cage2);
-showAnimals(cage3);
-
-
-console.log(cage1.animals);
+    
+    console.log(cage2.animals);
